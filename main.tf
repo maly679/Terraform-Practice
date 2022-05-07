@@ -1,5 +1,3 @@
-//Terraaform
-
 provider "aws" {
   region = "us-east-2"
   access_key = "AKIA4DIJGM67Y4T3W572"
@@ -75,7 +73,7 @@ resource "aws_security_group" "allow_web" {
     cidr_blocks      = ["0.0.0.0/0"]
   }
 
-//HTTP access to the imternet gateway i.e the port
+//HTTP access to the internet gateway i.e the port
   ingress {
     description      = "HTTP"
     from_port        = 80
@@ -83,7 +81,7 @@ resource "aws_security_group" "allow_web" {
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
   }
-  //SSH access to the internet gateway i.e the port
+ //SSH access to the internet gateway i.e the port
 ingress {
     description      = "SSH"
     from_port        = 22
@@ -110,7 +108,6 @@ resource "aws_network_interface" "web-server-nic" {
   security_groups = [aws_security_group.allow_web.id]
 
 }
-# 8. Assign an elastic IP to the network interface created in step 7
 
 resource "aws_eip" "one" {
   vpc                       = true
@@ -143,13 +140,13 @@ resource "aws_instance" "web-server-instance" {
 
 tags = {
   Name = "web-server"
-}
+  }
 
 }
 
 
 
-//When you get an option always hard code your availability zone or you may run into some issues with implementation
+//Other practice code.
 
 
 
