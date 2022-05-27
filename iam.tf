@@ -1,30 +1,26 @@
-#IAM
-
-resource "aws_iam_role" "eks-cluster" {
-  name = "eks-cluster"
-
-  assume_role_policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "eks.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
+data "aws_iam_policy_document" "eks_role_assume_role_policy" {
+  statement {
+    actions = [var.eks-actions]
+    principals {
+    type = var.service
+    identifiers = [var.eks-identifier]
     }
-  ]
-}
-POLICY
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "eks-cluster-AmazonEKSClusterPolicy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  policy_arn = var.arn_cluster_policy
   role       = aws_iam_role.eks-cluster.name
 }
 
 resource "aws_iam_role_policy_attachment" "eks-cluster-AmazonEKSVPCResourceController" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+  policy_arn = var.arn_resource_controller
   role       = aws_iam_role.eks-cluster.name
 }
+
+resource "aws_iam_role" "eks-cluster" {
+  name = var.cluster-name
+  assume_role_policy = data.aws_iam_policy_document.eks_role_assume_role_policy.json
+
+}
+
