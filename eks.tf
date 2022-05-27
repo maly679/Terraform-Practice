@@ -1,5 +1,4 @@
 ##Cluster requires two subnets in different AZs for it to work
-##Requires IAM policies
 
 resource "aws_eks_cluster" "eks-cluster" {
   name     = "example"
