@@ -1,7 +1,6 @@
 provider "aws" {
   region = "us-east-2"
-  access_key = "AKIA4DIJGM67Y4T3W572"
-  secret_key = "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"
+
 }
 
 resource "aws_vpc" "vpc-first" {
